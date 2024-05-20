@@ -1,8 +1,8 @@
 new Vue({
     el: '#app',
     data: {
-        showForm: false,
-        showProposta: true,
+        showForm: true,
+        showProposta: false,
         form1: {
             nome: 'Iago Lucio Pereira de carvalho',
             telefone: '22 992147015',
