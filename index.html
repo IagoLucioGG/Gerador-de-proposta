@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.js"
+        integrity="sha512-VqCeCECsaE2fYTxvPQk+OJ7+SQxzI1xZ6IqxuWd0GPKaJoeSFqeakVqNpMbx1AArieciBF71poL0dYTMiNgVxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="showForm" id="content">
+            <h1>Preencher Informações</h1>
+            <form @submit.prevent="handleSubmit">
+
+                <h2>Dados Do cliente:</h2>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" v-model="form.nome" required>
+
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" v-model="form.telefone" required>
+
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" v-model="form.endereco" required>
+
+                <label for="Data">Data:</label>
+                <input type="date" id="Data" v-model="form.data" required>
+
+
+
+                <h2>Dados Do produto:</h2>
+                <div id="tipoDeLuz">
+                    <button @click="mediaLuz('KWH')">KWH</button>
+                    <h4>OU</h4>
+                    <button @click="mediaLuz('R$')">R$</button><br>
+                </div>
+                <label for="mediaKw" v-if="form.tipoLuz === 'KWH'">Média Mensal de kWh:</label>
+                <input type="number" id="mediaKw" v-if="form.tipoLuz === 'KWH'" v-model="form.mediaKw" required>
+
+                <label for="mediaKw" v-if="form.tipoLuz === 'R$'">Valor Mensal de Luz:</label>
+                <input type="number" id="mediaKw" v-if="form.tipoLuz === 'R$'" v-model="form.mediaKw" required>
+
+
+
+
+                <button type="submit">Enviar</button>
+            </form>
+            <button @click="toggleView">Ir para Proposta</button>
+        </div>
+
+        <div v-if="showProposta">
+            <h1>Layout da Proposta</h1>
+            <div>
+                <button @click="printProposal">Imprimir Proposta</button>
+                <button @click="toggleView">Voltar ao Formulário</button>
+            </div>
+            <div class="proposal-content" id="proposal">
+                <!-- Layout da proposta aqui -->
+                <div id="content">
+                    <div id="Pagina1">
+                        <br><br>
+
+                        <h2>PROPOSTA COMERCIAL</h2>
+                        <br><br><br><br>
+
+                        <h1>{{form.nome}}</h1>
+
+                        <br><br><br><br><br>
+
+                        <div>
+                            <h2>Consultor: Vitor</h2>
+                            
+                            <h4>Endereço do cliente: {{form.endereco}}<br>Data:{{form.data}}</h4>
+                        </div>
+                    </div>
+
+                    <h3>Nosso propósito</h3>
+                    <p>Bem-vindo à LUMINAT SOLAR. Nosso propósito é lhe oferecer a melhor solução em energia renovável e
+                        econômica, investindo no sol por um futuro sustentável. Por isso, nosso fornecimento já inclui
+                        projeto, equipamentos, instalação e homologação junto à concessionária, bem como a ligação do
+                        sistema. Os projetos são assinados por nossos engenheiros, devidamente capacitados e registrados
+                        junto ao órgão de engenharia, e as instalações são executadas por técnicos qualificados, ambos
+                        com vasta experiência no segmento de energia.</p>
+
+                    <h3>Conheça as vantagens de ter um sistema de energia solar fotovoltaico:</h3>
+                    <ul>
+                        <li>É econômico: Conte com o melhor preço da região para instalar seu sistema e tenha uma
+                            economia de até 95%.</li>
+                        <li>Você pode pagar: O financiamento é fácil, com parcelas que podem ser menores do que sua
+                            conta de energia atual.</li>
+                        <li>Tem qualidade garantida: Trabalhamos com os melhores equipamentos do mercado e técnicos
+                            altamente qualificados.</li>
+                        <li>Compartilha energia: Você produz energia em um imóvel e pode compartilhar para qualquer
+                            outro que esteja na mesma concessionária.</li>
+                        <li>Você acompanha tudo: Acompanhe seu consumo de energia a qualquer hora, de qualquer lugar,
+                            por meio de um aplicativo.</li>
+                    </ul>
+
+                    <h3>Dados do cliente</h3>
+                    <p>Nome: ALEXANDRE<br>Endereço: TERESÓPOLIS</p>
+
+                    <h3>Processo de instalação</h3>
+                    <ol>
+                        <li>Vistoria técnica do local de instalação;</li>
+                        <li>Assinatura do contrato;</li>
+                        <li>Projeto executivo, civil e elétrico;</li>
+                        <li>Aprovação do projeto pela concessionária;</li>
+                        <li>Entrega e montagem civil e elétrica do sistema fotovoltaico;</li>
+                        <li>Inspeção da concessionária e liberação do sistema;</li>
+                        <li>Troca do medidor e ligação do sistema.</li>
+                    </ol>
+
+                    <h3>Dimensionamento do sistema</h3>
+                    <table>
+                        <tr>
+                            <td>Consumo médio mensal KW/h:</td>
+                            <td>{{form.KWH}}kwh/mês</td>
+                        </tr>
+                        <tr>
+                            <td>Consumo médio anual a ser suprido:</td>
+                            <td>{{form.KWH * 12}} kwh/ano</td>
+                        </tr>
+                        <tr>
+                            <td>Potência do sistema:</td>
+                            <td>9,52 Kwp</td>
+                        </tr>
+                        <tr>
+                            <td>Estimativa de geração média mensal:</td>
+                            <td>{{form.mediaKw}} kwh/mês</td>
+                        </tr>
+                        <tr>
+                            <td>Estimativa de geração média anual:</td>
+                            <td>{{form.mediaKw * 12}} kwh/ano</td>
+                        </tr>
+                        <tr>
+                            <td>Módulos fotovoltaicos:</td>
+                            <td>17</td>
+                        </tr>
+                        <tr>
+                            <td>Área necessária para instalação do sistema:</td>
+                            <td>44 m²</td>
+                        </tr>
+                        <tr>
+                            <td>Tipo de relógio:</td>
+                            <td>trifásico</td>
+                        </tr>
+                    </table>
+                    <p>*O valor é calculado com base na média histórica de radiação solar da região, e sujeito à
+                        variação em função das condições climáticas.<br>**A geração não é linear, sofrendo variação nos
+                        diferentes meses do ano.</p>
+
+                    <h3>Prazo de entrega</h3>
+                    <p>O prazo de entrega do sistema fotovoltaico para conectar-se à rede é de 30 a 90 dias (prazo
+                        máximo), considerando todos os trâmites burocráticos de registros na concessionária responsável.
+                    </p>
+
+                    <h3>Análise financeira</h3>
+                    <table>
+                        <tr>
+                            <th>Conta anual sem energia solar</th>
+                            <th>Conta anual com energia solar</th>
+                            <th>Economia anual</th>
+                        </tr>
+                        <tr>
+                            <td>R$12.000,00</td>
+                            <td>R$1.200,00</td>
+                            <td>R$10.800,00</td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>Ano</th>
+                            <th>Retorno/lucro</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>-R$11.640,00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>-R$8.280,00</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>-R$4.920,00</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>-R$1.560,00</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>R$20.160,00</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>R$53.760,00</td>
+                        </tr>
+                        <tr>
+                            <td>25</td>
+                            <td>R$70.560,00</td>
+                        </tr>
+                    </table>
+
+                    <h3>Serviços e equipamentos inclusos</h3>
+                    <p>Equipamentos:</p>
+                    <ul>
+                        <li>Placas fotovoltaicas</li>
+                        <li>Inversores</li>
+                        <li>Componentes padrão</li>
+                        <li>Material de fixação</li>
+                    </ul>
+                    <p>Serviços:</p>
+                    <ul>
+                        <li>Vistoria técnica</li>
+                        <li>Dimensionamento do projeto</li>
+                        <li>Projeto</li>
+                        <li>Preparação da estrutura e instalação</li>
+                        <li>Homologação e vistoria</li>
+                        <li>Teste</li>
+                        <li>Garantias</li>
+                    </ul>
+
+                    <h3>Garantias</h3>
+                    <table>
+                        <tr>
+                            <th>Equipamento/serviço</th>
+                            <th>Marca</th>
+                            <th>Garantia</th>
+                        </tr>
+                        <tr>
+                            <td>17 Módulos Modulo Mono cristalino</td>
+                            <td>RESUN 560W</td>
+                            <td>25 anos</td>
+                        </tr>
+                        <tr>
+                            <td>Inversores</td>
+                            <td>SOLIS 6K</td>
+                            <td>10 anos</td>
+                        </tr>
+                        <tr>
+                            <td>Instalação</td>
+                            <td>LUMINAT SOLAR</td>
+                            <td>1 ano</td>
+                        </tr>
+                    </table>
+                    <p>*Garantia do painel fotovoltaico: 10 a 12 anos para defeitos de fabricação; 12 anos para 90% da
+                        potência nominal do sistema; 25 anos para 80% da potência nominal do sistema.</p>
+
+                    <h3>Investimento</h3>
+                    <p>Total dos equipamentos e serviços: R$ 24.800,00</p>
+                    <p>Simulação de financiamento valor total bv financeira 90 dias de carência:</p>
+                    <ul>
+                        <li>24x R$1.320,00</li>
+                        <li>36x R$974,00</li>
+                        <li>48x R$810,00</li>
+                        <li>60x R$715,00</li>
+                        <li>72x R$661,00</li>
+                    </ul>
+
+                    <h3>Considerações gerais</h3>
+                    <p>O contrato comercial será enviado após a aprovação da proposta. Todos os impostos estão inclusos.
+                        O prazo de validade da proposta é de 15 dias.</p>
+                    <p>Em caso de dúvidas, entre em contato com a nossa equipe:</p>
+                    <p>Luminat Solar<br>CNPJ 37.083.990/0001-89<br>Endereço: Rua Pastor Cassiano, 156 – Barra,
+                        Teresópolis - RJ<br>Telefones: (21) 97383-9784<br>E-mail: luminatsolar@hotmail.com</p>
+                </div>
+            </div>
+            <button @click="printProposal">Imprimir Proposta</button>
+            <button @click="toggleView">Voltar ao Formulário</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
