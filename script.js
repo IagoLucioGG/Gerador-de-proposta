@@ -1,9 +1,9 @@
 new Vue({
     el: '#app',
     data: {
-        showForm: true,
-        showProposta: false,
-        form1: {
+        showForm: false,
+        showProposta: true,
+        form: {
             nome: 'Iago Lucio Pereira de carvalho',
             telefone: '22 992147015',
             endereco: ' Rua Alvaro paná 1350, fonte santa. Teresópolis, RJ.',
@@ -12,7 +12,7 @@ new Vue({
             tipoLuz: 'R$',
             KWH: null,
         },
-        form: {
+        form1: {
             nome: '',
             telefone: '',
             endereco: '',
@@ -22,14 +22,11 @@ new Vue({
             KWH: '',
         }
     },
-    computed: {
-        calculaValor() {
-            if (this.tipoLuz == 'R$') {
-                this.KWH = this.mediaKw / 0.45; // Exemplo de cálculo para uso baixo
-            } else {
-                this.KWH = this.mediaKw; // Exemplo de cálculo para uso alto
-            }
-        },
+    watch: {
+        tipoLuz(valor1="R$", valor2="KWH"){
+            this.calculaValor(valor1,valor2)
+            
+        }
     },
     methods: {
         handleSubmit() {
@@ -52,6 +49,13 @@ new Vue({
                 });
             } else {
                 console.error('Element with ID "proposal" not found.');
+            }
+        },
+        calculaValor(a,b) {
+            if (this.tipoLuz == a) {
+                this.KWH = this.mediaKw / 0.45; // Exemplo de cálculo para uso baixo
+            } if ((this.tipoLuz == b)){
+                this.KWH = this.mediaKw; // Exemplo de cálculo para uso alto
             }
         }
 
