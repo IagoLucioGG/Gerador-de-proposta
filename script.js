@@ -3,7 +3,7 @@ new Vue({
     data: {
         showForm: true,
         showProposta: false,
-        form1: {
+        form: {
             nome: 'Iago Lucio Pereira de carvalho',
             telefone: '22 992147015',
             endereco: ' Rua Alvaro paná 1350, fonte santa. Teresópolis, RJ.',
@@ -12,7 +12,7 @@ new Vue({
             tipoLuz: 'R$',
             KWH: null,
         },
-        form: {
+        form1: {
             nome: '',
             telefone: '',
             endereco: '',
@@ -23,9 +23,11 @@ new Vue({
         }
     },
     watch: {
-        tipoLuz(valor1="R$", valor2="KWH"){
-            this.calculaValor(valor1,valor2)
-            
+        'form.mediaKw': function (newVal, oldVal) {
+            this.calculaValor();
+        },
+        'form.tipoLuz': function (newVal, oldVal) {
+            this.calculaValor();
         }
     },
     methods: {
@@ -51,13 +53,15 @@ new Vue({
                 console.error('Element with ID "proposal" not found.');
             }
         },
-        calculaValor(a,b) {
-            if (this.tipoLuz == a) {
-                this.KWH = this.mediaKw / 0.45; // Exemplo de cálculo para uso baixo
-            } if ((this.tipoLuz == b)){
-                this.KWH = this.mediaKw; // Exemplo de cálculo para uso alto
-            }
-        }
+        calculaValor() {
+            if (this.form.tipoLuz === 'R$') {
+                this.form.KWH = this.form.mediaKw / 0.45; 
 
+            } else if (this.form.tipoLuz === 'KWH') {
+                this.form.KWH = this.form.mediaKw; 
+                
+            }
+            console.log('teste')
+        }
     }
 });

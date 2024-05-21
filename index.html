@@ -29,16 +29,17 @@
                 <input type="text" id="endereco" v-model="form.endereco" >
 
                 <label for="Data">Data:</label>
-                <input type="date" id="Data" v-model="form.data" >
+                <input type="date" id="Data" v-model="form.data" ><br>
 
 
 
                 <h2>Dados Do produto:</h2>
                 <div id="tipoDeLuz">
-                    <button @click="mediaLuz('KWH')">KWH</button>
+                    <button type="button" @click="mediaLuz('KWH')">KWH</button>
                     <h4>OU</h4>
-                    <button @click="mediaLuz('R$')">R$</button><br>
+                    <button type="button" @click="mediaLuz('R$')">R$</button>
                 </div>
+                
                 <label for="mediaKw" v-if="form.tipoLuz === 'KWH'">Média Mensal de kWh:</label>
                 <input type="number" id="mediaKw" v-if="form.tipoLuz === 'KWH'" v-model="form.mediaKw" >
 
@@ -75,7 +76,7 @@
                         <div>
                             <h2>Consultor: Vitor</h2>
                             
-                            <h4>Endereço do cliente: {{form.endereco}}<br>Data:{{form.data}}</h4>
+                            <h4>Data:{{form.data}}</h4>
                         </div>
                     </div>
 
@@ -102,8 +103,9 @@
                     </ul>
 
                     <h3>Dados do cliente</h3>
-                    <p>Nome: ALEXANDRE<br>Endereço: TERESÓPOLIS</p>
-
+                    <strong>
+                        <p>Nome: {{form.nome}}<br>Endereço: {{form.endereco}}</p>
+                    </strong>
                     <h3>Processo de instalação</h3>
                     <ol>
                         <li>Vistoria técnica do local de instalação;</li>
@@ -119,7 +121,7 @@
                     <table>
                         <tr>
                             <td>Consumo médio mensal KW/h:</td>
-                            <td>{{form.KWH}}kwh/mês</td>
+                            <td>{{form.KWH}} kwh/mês</td>
                         </tr>
                         <tr>
                             <td>Consumo médio anual a ser suprido:</td>
@@ -131,11 +133,11 @@
                         </tr>
                         <tr>
                             <td>Estimativa de geração média mensal:</td>
-                            <td>{{form.mediaKw}} kwh/mês</td>
+                            <td>{{form.KWH}} kwh/mês</td>
                         </tr>
                         <tr>
                             <td>Estimativa de geração média anual:</td>
-                            <td>{{form.mediaKw * 12}} kwh/ano</td>
+                            <td>{{form.KWH * 12}} kwh/ano</td>
                         </tr>
                         <tr>
                             <td>Módulos fotovoltaicos:</td>
@@ -267,8 +269,9 @@
                     <p>O contrato comercial será enviado após a aprovação da proposta. Todos os impostos estão inclusos.
                         O prazo de validade da proposta é de 15 dias.</p>
                     <p>Em caso de dúvidas, entre em contato com a nossa equipe:</p>
-                    <p>Luminat Solar<br>CNPJ 37.083.990/0001-89<br>Endereço: Rua Pastor Cassiano, 156 – Barra,
-                        Teresópolis - RJ<br>Telefones: (21) 97383-9784<br>E-mail: luminatsolar@hotmail.com</p>
+                    
+                <strong> <p>Luminat Solar<br>CNPJ 37.083.990/0001-89<br>Endereço: Rua Pastor Cassiano, 156 – Barra,
+                        Teresópolis - RJ<br>Telefones: (21) 97383-9784<br>E-mail: luminatsolar@hotmail.com</p></strong>
                 </div>
             </div>
             <button @click="printProposal">Imprimir Proposta</button>
