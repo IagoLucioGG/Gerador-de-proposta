@@ -3,7 +3,7 @@ new Vue({
     data: {
         showForm: true,
         showProposta: false,
-        form: {
+        form1: {
             nome: 'Iago Lucio Pereira de carvalho',
             telefone: '22 992147015',
             endereco: ' Rua Alvaro paná 1350, fonte santa. Teresópolis, RJ.',
@@ -12,7 +12,7 @@ new Vue({
             tipoLuz: 'R$',
             KWH: null,
         },
-        form1: {
+        form: {
             nome: '',
             telefone: '',
             endereco: '',
