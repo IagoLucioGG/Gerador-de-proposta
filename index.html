@@ -15,10 +15,11 @@
 <body>
     <div id="app">
         <div v-if="showForm" id="content">
-            <h1>Preencher Informações</h1>
+            <h1>Gerar Proposta</h1>
+            
             <form @submit.prevent="handleSubmit">
 
-                <h2>Dados Do cliente:</h2>
+                <h2>Dados do Cliente:</h2>
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" v-model="form.nome">
 
@@ -33,7 +34,7 @@
 
 
 
-                <h2>Dados Do produto:</h2>
+                <h2>Dados do Produto:</h2>
                 <div id="tipoDeLuz">
                     <button type="button" @click="mediaLuz('KWH')">KWH</button>
                     <h4>OU</h4>
@@ -41,12 +42,30 @@
                 </div>
                 
                 <label for="mediaKw" v-if="form.tipoLuz === 'KWH'">Média Mensal de kWh:</label>
-                <input type="number" id="mediaKw" v-if="form.tipoLuz === 'KWH'" v-model="form.mediaKw" >
+                <input type="number" id="mediaKw" v-if="form.tipoLuz === 'KWH'" v-model="form.mediaKw">
 
                 <label for="mediaKw" v-if="form.tipoLuz === 'R$'">Valor Mensal de Luz:</label>
-                <input type="number" id="mediaKw" v-if="form.tipoLuz === 'R$'" v-model="form.mediaKw" >
+                <input type="number" id="mediaKw" v-if="form.tipoLuz === 'R$'" v-model="form.mediaKw">
+
+                <label for="potenciaSistema">Potência do sistema: </label>
+                <input type="number" id="potenciaSistema">
+
+                <label for="modulosFotovotaicos">Quantidade de Módulos Fotovoltaicos: </label>
+                <input type="number" id="modulosFotovotaicos">
+
+                <label for="areaInstalação">Área necessária para instalação do sistema:</label>
+                <input type="number" id="areaInstalação"><strong>M²</strong>
 
 
+                <h2>Dados de Entrega:</h2>
+
+                <label for="tempoEntrega">Prazo para entrega: </label>
+                <input type="number" id="tempoEntrega">
+
+                <h2>Dados de Pagamento:</h2>
+
+                <label for="tempoEntrega">Prazo para entrega: </label>
+                <input type="number" id="tempoEntrega">
 
 
                 <button type="submit">Enviar</button>

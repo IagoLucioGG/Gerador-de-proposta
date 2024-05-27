@@ -43,25 +43,28 @@ new Vue({
             this.form.tipoLuz = tipo;
         },
         printProposal() {
+
             const element = document.getElementById('proposal');
+            
             if (element) {
-                const fileName = `PropostaComercial_${this.form.nome || 'SemNome'}.pdf`; // Usar 'SemNome' se o campo nome estiver vazio
+                const fileName = `Proposta_${this.form.nome || 'SemNome'}_${this.form.data}.pdf`; 
+                
                 html2pdf(element, {
                     filename: fileName
                 });
+
             } else {
                 console.error('Element with ID "proposal" not found.');
             }
         },
         calculaValor() {
+
             if (this.form.tipoLuz === 'R$') {
                 this.form.KWH = this.form.mediaKw / 0.45; 
 
             } else if (this.form.tipoLuz === 'KWH') {
                 this.form.KWH = this.form.mediaKw; 
-                
             }
-            console.log('teste')
         }
     }
 });
